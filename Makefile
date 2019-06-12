@@ -1,6 +1,6 @@
 CMP=gcc
 FLG=-g
-OUT=./bin/ast.out
+OUT=./bin/parser.out
 
 SRC=./src/*.c ./src/parser/*.c
 
