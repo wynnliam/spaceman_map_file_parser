@@ -117,5 +117,110 @@ In compiler theory, there are a few key steps. I'll only list the ones relevent 
 * Tokenizing - Take the sqm file, strip away all comments and uneccessary white space, and
 produce a list of "tokens".
 * Parser - Given the list of tokens, turn these into a tree-like representation of the level.
-* Intepreter - Take the tree-like representation, and turn it into a mapdef.
+* Interpreter - Take the tree-like representation, and turn it into a mapdef.
 * Output: a mapdef struct for the raycasting engine.
+
+The next few sections will detail each of these steps. I think it's instructive to think of this program
+as a translater between a human readable language and the language of a raycaster. By doing so, it solitifies
+the overall theory of this system as a program compilation process.
+
+### Program Steps:
+
+## 1. Input - An sqm File a human can read
+We first begin by feeding the level loader with an sqm file. I've detailed this before, but I will go
+into the format more so. Recall that a level is a set of recipes, and recipes have the format:
+
+```
+recipe {
+	attribute = "value";
+	attribute = "value";
+	...
+}
+```
+
+The main motivation of this system was to build levels with more expressive power. Rather than just a collection
+of independent recipes, we could put recipes within recipes which connote a dependence on one recipe with another.
+To achieve this, we'd have:
+
+```
+recipe {
+	attribute = "value";
+	attribute = "value";
+
+	recipe {
+		attribute = "value";
+		attribute = "value";
+	}
+
+	...
+}
+```
+
+To formally express this, we can construct a grammar, which is as follows:
+
+```
+Map -> RecipeList
+RecipeList -> Recipe | Recipe RecipeList
+Recipe -> Name { PropertyList }
+PropertyList -> Property | Property PropertyList
+Property -> Attribute | Recipe
+Attribute -> Name = Value;
+```
+
+I won't cover this in too much detail here. If you want to know more, I'd suggest reading about
+context free grammars.
+
+## 2. Tokenizing
+As I stated in the previous section, our file format is described by a grammar. However, we don't
+always have a perfect format. We get a text file with a series of characters. So before we can
+do anything, we need a list of symbols. These symbols are going to be a strings of characters
+that act as a single unit. The name for such a symbol is called a "token". So the first real step
+to loading a level is to take a series of characters group them into a list of tokens. Take the
+following recipe:
+
+```
+component {
+	x = "3";
+	y = "0";
+	w = "1";
+	h = "1";
+
+	is_floor_ciel = "0";
+	tex_0 = "./src/assests/textures/art/north_wing/art3b.bmp";
+	tex_1 = "0";
+}
+```
+
+We can think of this as:
+
+```
+N O
+	N E A S
+	N E A S
+	N E A S
+	N E A S
+
+
+	N E A S
+	N E A S
+	N E A S
+C
+```
+
+Where the letters mean as follows:
+
+* N is a Name, which is a string of letters, underscores, and numbers
+* O is an open curly bracket "{"
+* E is an equal sign "="
+* A is an "Attribute" which is just any string surrounded by quotation marks.
+* S is a semicolon ";"
+* C is a close curly bracket "}"
+
+The point of tokenizing is to basically strip away comments and whitespace that
+isn't relevent to getting the mapdef. Once we have the token list, we can
+use the grammar to convert the list of symbols into a tree representation of our
+map.
+
+## 3. Parsing
+## 4. Interpreter
+## 5. Output - A mapdef struct the Raycaster can read.
