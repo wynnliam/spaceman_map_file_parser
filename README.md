@@ -126,7 +126,7 @@ the overall theory of this system as a program compilation process.
 
 ### Program Steps:
 
-## 1. Input - An sqm File a human can read
+#### 1. Input - An sqm File a human can read
 We first begin by feeding the level loader with an sqm file. I've detailed this before, but I will go
 into the format more so. Recall that a level is a set of recipes, and recipes have the format:
 
@@ -170,7 +170,7 @@ Attribute -> Name = Value;
 I won't cover this in too much detail here. If you want to know more, I'd suggest reading about
 context free grammars.
 
-## 2. Tokenizing
+#### 2. Tokenizing
 As I stated in the previous section, our file format is described by a grammar. However, we don't
 always have a perfect format. We get a text file with a series of characters. So before we can
 do anything, we need a list of symbols. These symbols are going to be a strings of characters
@@ -221,6 +221,26 @@ isn't relevent to getting the mapdef. Once we have the token list, we can
 use the grammar to convert the list of symbols into a tree representation of our
 map.
 
-## 3. Parsing
-## 4. Interpreter
-## 5. Output - A mapdef struct the Raycaster can read.
+#### 3. Parsing
+Once we've got a list of tokens, we can scan it to determine the tree-like representation
+of the map. What do I mean by "tree-like representation"? Well first, a map is a list of
+recipes, and these recipes may have sub recipes in them. So essentially, the map itself is
+the root of this theoretical tree, and the highest level recipes (ie: recipes that are not
+sub-recipes of other recipes) are the child nodes to this root node. The child nodes of these
+recipes are their sub recipes, and so on. In this way, we create a tree-like structure of the
+level that better represent the relationships between different parts of the level.
+
+I will leave this fairly vague since, as of writing this (6-13-2019), this step and beyond have not
+really been fleshed out. Once I do, I'll expound this section, and the subsequent ones.
+
+#### 4. Interpreter
+In the interpretation stage, we take our tree-like structure and generate a corresponding mapdef struct.
+
+#### 5. Output - A mapdef struct the Raycaster can read.
+Finally, we have a mapdef for use! I should mention that at this point, our final mapdef will depend highly
+on the entities available in any particular game. For example, one game may have entities specific to it
+(maybe say collectibles in an exploration game, or ammo in a shooter). Because of this, the way we handle
+certain entities will be dependent on the game itself. If you want an entity to be an NPC of some kind, you
+need to code that in for your game, and then tell the interpreter how to create that should it come up.
+
+Again, as I start working on this part of the system, I will flesh it out more.
