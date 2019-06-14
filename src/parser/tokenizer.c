@@ -47,17 +47,25 @@ int close_token_file() {
 	return 1;
 }
 
-char* read_next_token() {
+int read_next_token(struct token* t) {
+	if(!t)
+		return 0;
+
 	char curr;
-	char* result = NULL;
 	char buffer[10000];
 	unsigned int buffer_index;
 
+	// This loop is neccessary since it will throw out multiple
+	// junk symbols at a time (ie: comments and whitespace).
+	// When we read a proper token, we break this loop.
 	do {
 		curr = getc(map_file);
 
-		if(curr == EOF)
-			break;
+		if(curr == EOF) {
+			t->symbol = NULL;
+			t->type = TOKEN_NONE;
+			return 0;
+		}
 
 		// In this case, we discard the character.
 		if(is_whitespace(curr) || is_end_of_line(curr))
@@ -67,8 +75,8 @@ char* read_next_token() {
 			while(curr != '\n')
 				curr = getc(map_file);
 		} else {
-			switch(get_token_type(curr)) {
-				// TODO: copy and return
+			t->type = get_token_type(curr);
+			switch(t->type) {
 				case TOKEN_NAME:
 					buffer_index = 0;
 					while(is_alphabetic(curr) || curr == '_' || is_numeric(curr)) {
@@ -78,10 +86,10 @@ char* read_next_token() {
 					}
 
 					buffer[buffer_index] = '\0';
-					result = (char*)malloc(strlen(buffer) + 1);
-					strcpy(result, buffer);
+					t->symbol = (char*)malloc(strlen(buffer) + 1);
+					strcpy(t->symbol, buffer);
 
-					return result;
+					return 1;
 
 				case TOKEN_ATTR:
 					buffer[0] = '"';
@@ -94,40 +102,41 @@ char* read_next_token() {
 					} while(curr != '"');
 
 					buffer[buffer_index] = '\0';
-					result = (char*)malloc(strlen(buffer) + 1);
-					strcpy(result, buffer);
+					t->symbol = (char*)malloc(strlen(buffer) + 1);
+					strcpy(t->symbol, buffer);
 
-					return result;
+					return 1;
 
 				case TOKEN_OPEN_CURL:
-					result = (char*)malloc(strlen("{") + 1);
-					strcpy(result, "{");
-					return result;
+					t->symbol = (char*)malloc(strlen("{") + 1);
+					strcpy(t->symbol, "{");
+					return 1;
 
 				case TOKEN_CLOSE_CURL:
-					result = (char*)malloc(strlen("}") + 1);
-					strcpy(result, "}");
-					return result;
+					t->symbol = (char*)malloc(strlen("}") + 1);
+					strcpy(t->symbol, "}");
+					return 1;
 
 				case TOKEN_EQUAL:
-					result = (char*)malloc(strlen("=") + 1);
-					strcpy(result, "=");
-					return result;
+					t->symbol = (char*)malloc(strlen("=") + 1);
+					strcpy(t->symbol, "=");
+					return 1;
 
 				case TOKEN_SEMI:
-					result = (char*)malloc(strlen(";") + 1);
-					strcpy(result, ";");
-					return result;
+					t->symbol = (char*)malloc(strlen(";") + 1);
+					strcpy(t->symbol, ";");
+					return 1;
 
 				default:
-					printf("%c\n", curr);
-					return "";
+					t->type = TOKEN_NONE;
+					t->symbol = NULL;
+					return 0;
 			}
 		}
 
 	} while(1);
 
-	return result;
+	return 1;
 }
 
 static int get_token_type(int c) {

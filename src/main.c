@@ -5,15 +5,19 @@
 
 int main() {
 	const char* file_path = "./bin/c01.sqm";
-	char* next_token = NULL;
+	struct token curr_token;
 
 	open_file_for_tokenizing(file_path);
 
 	do {
-		next_token = read_next_token();
-		if(next_token)
-			printf("%s\n", next_token);
-	} while(next_token != NULL);
+		if(read_next_token(&curr_token)) {
+			if(curr_token.symbol) {
+				printf("%d:\t%s\n", curr_token.type, curr_token.symbol);
+			}
+		} else {
+			break;
+		}
+	} while(1);
 
 	close_token_file();
 
