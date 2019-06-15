@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "./parser/parser.h"
 #include <string.h>
@@ -13,6 +14,7 @@ int main() {
 		if(read_next_token(&curr_token)) {
 			if(curr_token.symbol) {
 				printf("%d:\t%s\n", curr_token.type, curr_token.symbol);
+				free(curr_token.symbol);
 			}
 		} else {
 			break;
