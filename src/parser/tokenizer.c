@@ -74,18 +74,15 @@ int read_next_token(struct token* t) {
 		if(is_whitespace(curr) || is_end_of_line(curr))
 			continue;
 		// In this case, we discard the entire line
-		else if(is_start_of_comment(curr)) {
-			while(curr != '\n')
-				curr = getc(map_file);
-		} else {
+		else if(is_start_of_comment(curr))
+			while((curr = getc(map_file)) != '\n');
+		// We are reading a meaningful token, so handle it accordingly.
+		else
 			return read_token(t, curr);
-		}
-
 	} while(1);
 
 	return 1;
 }
-
 
 int is_whitespace(int c) {
 	return (c != 0 && c != 10 && (c < 33 || c > 127));

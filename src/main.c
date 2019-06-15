@@ -5,7 +5,7 @@
 #include <string.h>
 
 int main() {
-	const char* file_path = "./bin/c01.sqm";
+	const char* file_path = "./bin/map.sqm";
 	struct token curr_token;
 
 	open_file_for_tokenizing(file_path);
