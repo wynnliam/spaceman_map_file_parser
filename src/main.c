@@ -6,7 +6,8 @@
 
 int main() {
 	const char* file_path = "./bin/map.sqm";
-	struct token curr_token;
+	struct token_list* tokens = get_tokens_from_file(file_path);
+	/*struct token curr_token;
 
 	open_file_for_tokenizing(file_path);
 
@@ -21,7 +22,7 @@ int main() {
 		}
 	} while(1);
 
-	close_token_file();
+	close_token_file();*/
 
 	return 0;
 }

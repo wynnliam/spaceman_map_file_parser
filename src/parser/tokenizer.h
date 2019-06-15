@@ -5,7 +5,13 @@ struct token {
 	int type;
 };
 
-int open_file_for_tokenizing(const char* file_path);
-int close_token_file();
+struct token_list_node {
+	struct token* token;
+	struct token_list_node* next;
+};
 
-int read_next_token(struct token* t);
+struct token_list {
+	struct token_list_node* tail;
+};
+
+struct token_list* get_tokens_from_file(const char* file_path);

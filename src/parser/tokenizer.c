@@ -16,6 +16,10 @@
 
 static FILE* map_file = NULL;
 
+static int open_file_for_tokenizing(const char* file_path);
+static int close_token_file();
+
+static int read_next_token(struct token* t);
 
 static int is_whitespace(int c);
 static int is_end_of_line(int c);
@@ -50,6 +54,23 @@ int close_token_file() {
 	map_file = NULL;
 
 	return 1;
+}
+
+struct token_list* get_tokens_from_file(const char* file_path) {
+	if(!file_path)
+		return 0;
+
+	if(!open_file_for_tokenizing(file_path))
+		return 0;
+
+	struct token_list* result;
+	result = (struct token_list*)malloc(sizeof(struct token_list));
+
+	result->tail = NULL;
+
+	close_token_file(file_path);
+
+	return result;
 }
 
 int read_next_token(struct token* t) {
