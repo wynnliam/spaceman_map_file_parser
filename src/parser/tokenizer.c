@@ -16,11 +16,6 @@
 
 static FILE* map_file = NULL;
 
-static int open_file_for_tokenizing(const char* file_path);
-static int close_token_file();
-
-static int read_next_token(struct token* t);
-
 static int is_whitespace(int c);
 static int is_end_of_line(int c);
 static int is_start_of_comment(int c);
@@ -33,6 +28,53 @@ static int get_token_type(int c);
 static int read_token_as_name(struct token* t, char curr);
 static int read_token_as_attribute(struct token* t, char curr);
 static int read_token_as_single_symbol(struct token* t, char symbol);
+
+struct token_list* construct_token_list() {
+	struct token_list* result;
+
+	result = (struct token_list*)malloc(sizeof(struct token_list));
+	result->tail = NULL;
+
+	return result;
+}
+
+void print_token_list(struct token_list* list) {
+	if(!list || !list->tail)
+		return;
+
+	struct token_list_node* head = list->tail->next;
+	struct token_list_node* curr = head;
+
+	list->tail->next = NULL;
+
+	while(curr) {
+		printf("%d\t%s\n", curr->token->type, curr->token->symbol);
+		curr = curr->next;
+	}
+
+	list->tail->next = head;
+}
+
+int insert_token_into_list(struct token* token, struct token_list* list) {
+	if(!token || !list)
+		return 0;
+
+	struct token_list_node* curr;
+
+	curr = (struct token_list_node*)malloc(sizeof(struct token_list_node));
+	curr->token = token;
+
+	if(!list->tail) {
+		curr->next = curr;
+		list->tail = curr;
+	} else {
+		curr->next = list->tail->next;
+		list->tail->next = curr;
+		list->tail = curr;
+	}
+
+	return 1;
+}
 
 int open_file_for_tokenizing(const char* file_path) {
 	if(!file_path || map_file)
@@ -54,23 +96,6 @@ int close_token_file() {
 	map_file = NULL;
 
 	return 1;
-}
-
-struct token_list* get_tokens_from_file(const char* file_path) {
-	if(!file_path)
-		return 0;
-
-	if(!open_file_for_tokenizing(file_path))
-		return 0;
-
-	struct token_list* result;
-	result = (struct token_list*)malloc(sizeof(struct token_list));
-
-	result->tail = NULL;
-
-	close_token_file(file_path);
-
-	return result;
 }
 
 int read_next_token(struct token* t) {
