@@ -29,6 +29,31 @@ static int read_token_as_name(struct token* t, char curr);
 static int read_token_as_attribute(struct token* t, char curr);
 static int read_token_as_single_symbol(struct token* t, char symbol);
 
+struct token_list* get_tokens(const char* file_path) {
+	if(!open_file_for_tokenizing(file_path))
+		return NULL;
+
+	struct token* curr_token;
+	struct token_list* token_list = construct_token_list();
+
+	do {
+		curr_token = (struct token*)malloc(sizeof(struct token));
+
+		if(read_next_token(curr_token)) {
+			if(curr_token->symbol) {
+				insert_token_into_list(curr_token, token_list);
+			}
+		} else {
+			free(curr_token);
+			break;
+		}
+	} while(1);
+
+	close_token_file();
+
+	return token_list;
+}
+
 struct token_list* construct_token_list() {
 	struct token_list* result;
 
@@ -72,6 +97,42 @@ int insert_token_into_list(struct token* token, struct token_list* list) {
 		list->tail->next = curr;
 		list->tail = curr;
 	}
+
+	return 1;
+}
+
+int clean_token_list(struct token_list* list) {
+	if(!list)
+		return 0;
+
+	if(!list->tail) {
+		free(list);
+		return 1;
+	}
+
+	struct token_list_node* curr;
+	struct token_list_node* temp;
+
+	curr = list->tail->next;
+	temp = NULL;
+
+	list->tail->next = NULL;
+
+	while(curr) {
+		temp = curr->next;
+
+		if(curr->token) {
+			if(curr->token->symbol)
+				free(curr->token->symbol);
+
+			free(curr->token);
+		}
+
+		free(curr);
+		curr = temp;
+	}
+
+	free(list);
 
 	return 1;
 }
