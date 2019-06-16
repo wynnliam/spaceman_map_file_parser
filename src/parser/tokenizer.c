@@ -16,6 +16,14 @@
 
 static FILE* map_file = NULL;
 
+static int open_file_for_tokenizing(const char* file_path);
+static int close_token_file();
+
+static int read_next_token(struct token* t);
+
+static struct token_list* construct_token_list();
+static int insert_token_into_list(struct token* token, struct token_list* list);
+
 static int is_whitespace(int c);
 static int is_end_of_line(int c);
 static int is_start_of_comment(int c);
