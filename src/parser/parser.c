@@ -11,9 +11,15 @@ static int is_recipe(struct token_list_node* curr);
 static int is_recipe_end(struct token_list_node* curr);
 static int is_attribute(struct token_list_node* curr);
 
+// Side effect! Will change the value of curr
+static struct recipe* build_recipe_from_tokens(struct token_list_node** curr);
+
 struct recipe_list* build_map_tree(struct token_list* tokens) {
 	if(!tokens || !tokens->tail)
 		return NULL;
+
+	struct recipe_list* result = construct_recipe_list();
+	struct recipe* curr_recipe;
 
 	// Begin by breaking the token list into a simple linear linked list.
 	struct token_list_node* head = tokens->tail->next;
@@ -23,26 +29,71 @@ struct recipe_list* build_map_tree(struct token_list* tokens) {
 
 	while(curr) {
 		if(is_recipe(curr)) {
-			printf("%s %s\n", curr->token->symbol, curr->next->token->symbol);
-			curr = curr->next->next;
-		} else if(is_recipe_end(curr)) {
+			curr_recipe = build_recipe_from_tokens(&curr);
+			insert_recipe_into_recipe_list(curr_recipe, result);
+			//curr = curr->next->next;
+		} /*else if(is_recipe_end(curr)) {
 			printf("%s\n", curr->token->symbol);
-			curr = curr->next;
+			//curr = curr->next;
 		} else if(is_attribute(curr)) {
 			printf("%s %s %s %s\n", curr->token->symbol,
 									curr->next->token->symbol,
 									curr->next->next->token->symbol,
 									curr->next->next->next->token->symbol);
-			curr = curr->next->next->next->next;
-		} else {
-			curr = curr->next;
+			//curr = curr->next->next->next->next;
+		}*/ else {
+			clean_recipe_list(result);
+			result = NULL;
+			break;
 		}
 	}
 
 	// Reconnect the list.
 	tokens->tail->next = head;
 
-	return NULL;
+	return result;
+}
+
+struct recipe* build_recipe_from_tokens(struct token_list_node** curr) {
+	if(!curr)
+		return NULL;
+
+	struct recipe* result = construct_recipe(0, (*curr)->token->symbol);
+
+	struct recipe* subrecipe = NULL;
+	struct attribute* attribute = NULL;
+
+	// TODO: Finish me!
+
+	// Since we know we are working with a recipe, we can go ahead and move to
+	// the next unscanned token.
+	*curr = (*curr)->next->next;
+
+	do {
+		if(is_recipe_end(*curr)) {
+			*curr = (*curr)->next;
+			break;
+		} else if(is_attribute(*curr)) {
+			attribute = construct_attribute((*curr)->token->symbol, (*curr)->next->next->token->symbol);
+			insert_attribute_into_recipe(attribute, result);
+			*curr = (*curr)->next->next->next->next;
+		} else if(is_recipe(*curr)) {
+			subrecipe = build_recipe_from_tokens(curr);
+
+			if(!subrecipe) {
+				clean_recipe(result);
+				return NULL;
+			}
+
+			insert_recipe_into_recipe_list(subrecipe, result->subrecipes);
+		} else {
+			// Error!
+			clean_recipe(result);
+			return NULL;
+		}
+	} while(1);
+
+	return result;
 }
 
 int is_recipe(struct token_list_node* curr) {
