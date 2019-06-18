@@ -8,6 +8,9 @@
 	parts of the world activate that trigger.
 */
 
+#ifndef MAP_LOAD_RECIPE
+#define MAP_LOAD_RECIPE
+
 #include "./attribute.h"
 
 struct recipe;
@@ -41,3 +44,5 @@ struct recipe_list* construct_recipe_list();
 int insert_recipe_into_recipe_list(struct recipe* recipe, struct recipe_list* list);
 int clean_recipe_list(struct recipe_list* list);
 int print_recipe_list(struct recipe_list* list, unsigned int num_spaces);
+
+#endif

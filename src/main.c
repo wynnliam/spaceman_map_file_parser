@@ -2,11 +2,15 @@
 #include <stdlib.h>
 
 #include "./parser/parser.h"
+#include "./parser/tokenizer.h"
 #include <string.h>
 
 int main() {
 	struct token_list* tokens = get_tokens("./bin/c01.sqm");
-	print_token_list(tokens);
+	struct recipe_list* map_tree = build_map_tree(tokens);
+
+	print_recipe_list(map_tree, 0);
+
 	clean_token_list(tokens);
 
 	return 0;
