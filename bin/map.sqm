@@ -13,13 +13,25 @@ thing {
 			#wdwwda
 
 
-			  		 		 	   
+	thing {
+		type = "a";
+		thing {
+			thing {
+				val = "b";
+			}
+
+			val = "b";
+		}
+	}		  		 		 	   
 
 
 # wdawdw
 }
 
-
+component {
+	x = "12";
+	y = "88";
+}
 
 
  # wdadw

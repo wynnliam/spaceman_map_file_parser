@@ -6,7 +6,7 @@
 #include <string.h>
 
 int main() {
-	struct token_list* tokens = get_tokens("./bin/c01.sqm");
+	struct token_list* tokens = get_tokens("./bin/map.sqm");
 	struct recipe_list* map_tree = build_map_tree(tokens);
 
 	print_recipe_list(map_tree, 0);
