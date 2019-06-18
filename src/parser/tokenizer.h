@@ -3,6 +3,14 @@
 #ifndef MAP_LOAD_TOKENIZER
 #define MAP_LOAD_TOKENIZER
 
+#define TOKEN_NONE			0
+#define TOKEN_NAME			1
+#define TOKEN_ATTR			2
+#define TOKEN_OPEN_CURL		3
+#define TOKEN_CLOSE_CURL	4
+#define TOKEN_EQUAL			5
+#define TOKEN_SEMI			6
+
 struct token {
 	char* symbol;
 	int type;

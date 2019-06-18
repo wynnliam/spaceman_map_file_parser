@@ -12,6 +12,7 @@ int main() {
 	print_recipe_list(map_tree, 0);
 
 	clean_token_list(tokens);
+	clean_recipe_list(map_tree);
 
 	return 0;
 }
