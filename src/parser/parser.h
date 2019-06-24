@@ -5,6 +5,7 @@
 
 #include "./recipe.h"
 #include "./tokenizer.h"
+#include "./texture_list.h"
 
 struct recipe_list* build_map_tree(struct token_list* tokens);
 
