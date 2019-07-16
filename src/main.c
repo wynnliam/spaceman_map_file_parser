@@ -15,9 +15,10 @@ int main() {
 	clean_recipe_list(map_tree);*/
 
 	// TODO: Clean
-	struct texlist_data* data = construct_texlist_data(NULL, "./floor_wood_2.bmp");
+	struct texlist_data* data = construct_texlist_data(NULL, "./floor_wood_2.bmp", 0);
 
 	print_texlist_data(data);
+	clean_textlist_data(data);
 
 	return 0;
 }
