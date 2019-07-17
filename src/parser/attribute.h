@@ -24,7 +24,6 @@ int print_attribute(const struct attribute* to_print);
 
 // ATTRIBUTE LIST FUNCTIONS
 struct attribute_list* construct_attribute_list();
-struct attribute_list* copy_attribute_list(struct attribute_list* to_copy);
 int insert_attribute_into_list(struct attribute* attr, struct attribute_list* attr_list);
 int clean_attribute_list(struct attribute_list* attr_list);
 int print_attribute_list(struct attribute_list* attr_list, unsigned int num_spaces);

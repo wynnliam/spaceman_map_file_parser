@@ -30,6 +30,7 @@ struct texture_list {
 };
 
 struct texlist_data* construct_texlist_data(const char* tex_0, const char* tex_1, int is_floor_ceil_pair);
+int texlist_data_equals(struct texlist_data* a, struct texlist_data* b);
 void clean_textlist_data(struct texlist_data* to_clean);
 void print_texlist_data(struct texlist_data* data);
 
@@ -39,5 +40,6 @@ struct texture_list* construct_texture_list();
 int insert_texture_into_texture_list(struct texture_list* list, struct texlist_data* data);
 void clear_texture_list(struct texture_list* list);
 void print_texture_list(struct texture_list* list);
+
 #endif
 

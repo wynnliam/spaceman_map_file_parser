@@ -28,6 +28,26 @@ struct texlist_data* construct_texlist_data(const char* tex_0, const char* tex_1
 	return result;
 }
 
+int texlist_data_equals(struct texlist_data* a, struct texlist_data* b) {
+	if(!a || !b)
+		return a == b;
+
+	int tex_0_cmp;
+	int tex_1_cmp;
+
+	if(!a->tex_0 || !b->tex_0)
+		tex_0_cmp = a->tex_0 == b->tex_0;
+	else
+		tex_0_cmp = strcmp(a->tex_0, b->tex_0) == 0;
+
+	if(!a->tex_1 || !b->tex_1)
+		tex_1_cmp = a->tex_1 == b->tex_1;
+	else
+		tex_1_cmp = strcmp(a->tex_1, b->tex_1) == 0;
+
+	return tex_0_cmp && tex_1_cmp && (a->is_floor_ceil_pair == b->is_floor_ceil_pair);
+}
+
 void clean_textlist_data(struct texlist_data* to_clean) {
 	if(!to_clean)
 		return;

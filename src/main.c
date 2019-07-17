@@ -31,18 +31,13 @@ int main() {
 	clear_texture_list(list);
 	free(list);*/
 
-	struct attribute_list* list = construct_attribute_list();
-	insert_attribute_into_list(construct_attribute("x", "3"), list);
-	insert_attribute_into_list(construct_attribute("y", "7"), list);
-	insert_attribute_into_list(construct_attribute("w", "16"), list);
-	insert_attribute_into_list(construct_attribute("h", "8"), list);
+	struct texlist_data a, b;
 
-	struct attribute_list* copy_list = copy_attribute_list(list);
+	a.tex_0 = "Tex 0"; b.tex_0 = "Tex 0";
+	a.tex_1 = "Tex 1"; b.tex_1 = "Tex 1";
+	a.is_floor_ceil_pair = 0; b.is_floor_ceil_pair = 0;
 
-	print_attribute_list(copy_list, 0);
-
-	clean_attribute_list(list);
-	clean_attribute_list(copy_list);
+	printf("%d\n", texlist_data_equals(&a, &b));
 
 	return 0;
 }

@@ -6,8 +6,6 @@
 #include <string.h>
 #include <stdio.h>
 
-static struct attribute_list_node* copy_attribute_list_node(struct attribute_list_node* to_copy);
-
 /* ATTRIBUTE FUNCTION IMPLEMENTATIONS */
 struct attribute* construct_attribute(const char* name, const char* value) {
 	if(!name || !value)
@@ -50,16 +48,6 @@ struct attribute_list* construct_attribute_list() {
 	struct attribute_list* result = (struct attribute_list*)malloc(sizeof(struct attribute_list));
 
 	result->head = NULL;
-
-	return result;
-}
-
-struct attribute_list* copy_attribute_list(struct attribute_list* to_copy) {
-	if(!to_copy)
-		return NULL;
-
-	struct attribute_list* result = construct_attribute_list();
-	result->head = copy_attribute_list_node(to_copy->head);
 
 	return result;
 }
@@ -113,21 +101,4 @@ int clean_attribute_list(struct attribute_list* attr_list) {
 	free(attr_list);
 
 	return 1;
-}
-
-struct attribute_list_node* copy_attribute_list_node(struct attribute_list_node* to_copy) {
-	if(!to_copy)
-		return NULL;
-
-	struct attribute* to_copy_attr = to_copy->attribute;
-	struct attribute_list_node* result = (struct attribute_list_node*)malloc(sizeof(struct attribute_list_node));
-
-	if(!to_copy_attr)
-		result->attribute = NULL;
-	else
-		result->attribute = construct_attribute(to_copy_attr->name, to_copy_attr->value);
-
-	result->next = copy_attribute_list_node(to_copy->next);
-
-	return result;
 }
