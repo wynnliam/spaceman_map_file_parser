@@ -9,9 +9,6 @@ struct texlist_data {
 	char* tex_0;
 	char* tex_1;
 
-	// The id used in the mapdef to associate a
-	// a number with a texture pair.
-	unsigned int mapdef_id;
 	// Tells us if we should interpret this texture data as
 	// a floor/ceil pair or just a wall. While two-texture walls
 	// have no meaning, a floor/ceil pair can have zero, one, or
@@ -23,9 +20,24 @@ struct texlist_data {
 	int is_floor_ceil_pair;
 };
 
+struct texlist_node {
+	struct texlist_data* data;
+	struct texlist_node* next;
+};
+
+struct texture_list {
+	struct texlist_node* head;
+};
+
 struct texlist_data* construct_texlist_data(const char* tex_0, const char* tex_1, int is_floor_ceil_pair);
 void clean_textlist_data(struct texlist_data* to_clean);
-
 void print_texlist_data(struct texlist_data* data);
+
+struct texlist_node* construct_texlist_node(struct texlist_data* data);
+
+struct texture_list* construct_texture_list();
+int insert_texture_into_texture_list(struct texture_list* list, struct texlist_data* data);
+void clear_texture_list(struct texture_list* list);
+void print_texture_list(struct texture_list* list);
 #endif
 

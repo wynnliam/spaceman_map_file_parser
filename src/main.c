@@ -15,10 +15,22 @@ int main() {
 	clean_recipe_list(map_tree);*/
 
 	// TODO: Clean
-	struct texlist_data* data = construct_texlist_data(NULL, "./floor_wood_2.bmp", 0);
+	struct texlist_data* data1 = construct_texlist_data(NULL, "./floor_wood_1.bmp", 0);
+	struct texlist_data* data2 = construct_texlist_data(NULL, "./floor_wood_2.bmp", 1);
+	struct texlist_data* data3 = construct_texlist_data(NULL, "./floor_wood_3.bmp", 0);
+	struct texlist_data* data4 = construct_texlist_data(NULL, "./floor_wood_4.bmp", 1);
+	struct texlist_data* data5 = construct_texlist_data(NULL, "./floor_wood_5.bmp", 0);
 
-	print_texlist_data(data);
-	clean_textlist_data(data);
+	struct texture_list* list = construct_texture_list();
+	insert_texture_into_texture_list(list, data1);
+	insert_texture_into_texture_list(list, data2);
+	insert_texture_into_texture_list(list, data3);
+	insert_texture_into_texture_list(list, data4);
+	insert_texture_into_texture_list(list, data5);
+
+	print_texture_list(list);
+	clear_texture_list(list);
+	free(list);
 
 	return 0;
 }
