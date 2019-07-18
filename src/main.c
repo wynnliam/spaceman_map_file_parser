@@ -17,6 +17,8 @@ int main() {
 
 	clean_token_list(tokens);
 	clean_recipe_list(map_tree);
+	clear_texture_list(texture_list);
+	free(texture_list);
 
 	/*struct texlist_data* data1 = construct_texlist_data(NULL, "./floor_wood_1.bmp", 0);
 	struct texlist_data* data2 = construct_texlist_data(NULL, "./floor_wood_2.bmp", 1);
