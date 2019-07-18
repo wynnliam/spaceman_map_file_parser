@@ -65,6 +65,26 @@ int insert_attribute_into_list(struct attribute* attr, struct attribute_list* at
 	return 1;
 }
 
+char* get_attribute_value(struct attribute_list* list, const char* name) {
+	if(!list)
+		return NULL;
+
+	char* result = NULL;
+	struct attribute_list_node* curr = list->head;
+
+	while(curr) {
+		if(strcmp(curr->attribute->name, name) == 0) {
+			result = (char*)malloc(strlen(curr->attribute->value) + 1);
+			strcpy(result, curr->attribute->value);
+			break;
+		}
+
+		curr = curr->next;
+	}
+
+	return result;
+}
+
 int print_attribute_list(struct attribute_list* attr_list, unsigned int num_spaces) {
 	if(!attr_list)
 		return 0;
