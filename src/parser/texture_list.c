@@ -8,6 +8,7 @@
 #include <string.h>
 
 static struct texlist_data* build_texlist_data_from_recipe(struct recipe* component_recipe);
+static int build_texture_list_from_recipe_list_node(struct recipe_list_node* head, struct texture_list* result);
 
 struct texlist_data* construct_texlist_data(const char* tex_0, const char* tex_1, int is_floor_ceil_pair) {
 	struct texlist_data* result = (struct texlist_data*)malloc(sizeof(struct texlist_data));
@@ -154,6 +155,36 @@ int texture_list_contains(struct texture_list* list, struct texlist_data* to_fin
 	return result;
 }
 
+int build_texture_list_from_map_tree(struct recipe_list* map_tree, struct texture_list* result) {
+	if(!map_tree || !map_tree->head || !result)
+		return 0;
+
+	return build_texture_list_from_recipe_list_node(map_tree->head, result);
+}
+
+static int build_texture_list_from_recipe_list_node(struct recipe_list_node* head, struct texture_list* result) {
+	if(!head)
+		return 0;
+
+	struct recipe* curr_recipe = head->recipe;
+	struct recipe_list* sub_recipes = curr_recipe->subrecipes;
+	struct texlist_data* texture_data;
+
+	if(strcmp(curr_recipe->type, "component") == 0) {
+		texture_data = build_texlist_data_from_recipe(curr_recipe);
+
+		if(texture_data) {
+			if(!texture_list_contains(result, texture_data))
+				insert_texture_into_texture_list(result, texture_data);
+			else
+				clean_textlist_data(texture_data);
+		}
+	}
+
+	return build_texture_list_from_recipe_list_node(sub_recipes->head, result) +
+		   build_texture_list_from_recipe_list_node(head->next, result);
+}
+
 static struct texlist_data* build_texlist_data_from_recipe(struct recipe* component_recipe) {
 	if(!component_recipe)
 		return NULL;
@@ -178,31 +209,4 @@ static struct texlist_data* build_texlist_data_from_recipe(struct recipe* compon
 		free(attr_is_floor_ceil_pair);
 
 	return result;
-}
-
-int build_texture_list_from_map_tree(struct recipe_list* map_tree, struct texture_list* result) {
-	if(!map_tree || !map_tree->head || !result)
-		return 0;
-
-	struct recipe* curr_recipe = map_tree->head->recipe;
-	struct recipe_list* sub_recipes = curr_recipe->subrecipes;
-	struct texlist_data* texture_data;
-
-	if(strcmp(curr_recipe->type, "component") == 0) {
-		texture_data = build_texlist_data_from_recipe(curr_recipe);
-
-		if(texture_data) {
-			if(!texture_list_contains(result, texture_data))
-				insert_texture_into_texture_list(result, texture_data);
-			else
-				clean_textlist_data(texture_data);
-		}
-	}
-
-	// TODO: Write function such that we only take recipe_list_node
-	struct recipe_list dummy;
-	dummy.head = map_tree->head->next;
-
-	return build_texture_list_from_map_tree(sub_recipes, result) +
-		   build_texture_list_from_map_tree(&dummy, result);
 }
