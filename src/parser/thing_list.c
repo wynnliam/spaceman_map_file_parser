@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 struct thinglist_data* construct_thinglist_data(const char* sprite_sheet, int anim_class, int x, int y, int rot) {
 	struct thinglist_data* result = (struct thinglist_data*)malloc(sizeof(struct thinglist_data));
@@ -23,3 +24,14 @@ struct thinglist_data* construct_thinglist_data(const char* sprite_sheet, int an
 	return result;
 }
 
+void print_thinglist_data(struct thinglist_data* to_print) {
+	if(!to_print)
+		return;
+
+	if(to_print->sprite_sheet)
+		printf("sprite sheed: %s\n", to_print->sprite_sheet);
+
+	printf("anim class: %d\n", to_print->anim_class);
+	printf("position: %d %d\n", to_print->x, to_print->y);
+	printf("rotation: %d\n", to_print->rot);
+}

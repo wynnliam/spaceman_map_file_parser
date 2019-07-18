@@ -12,6 +12,7 @@ struct thinglist_data {
 };
 
 struct thinglist_data* construct_thinglist_data(const char* sprite_sheet, int anim_class, int x, int y, int rot);
+void print_thinglist_data(struct thinglist_data* to_print);
 
 #endif
 
