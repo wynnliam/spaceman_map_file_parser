@@ -26,7 +26,7 @@ int main() {
 																 90);
 
 	print_thinglist_data(thing_data);
+	clean_thinglist_data(thing_data);
 
-	// Clean
 	return 0;
 }

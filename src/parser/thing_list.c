@@ -24,6 +24,16 @@ struct thinglist_data* construct_thinglist_data(const char* sprite_sheet, int an
 	return result;
 }
 
+void clean_thinglist_data(struct thinglist_data* to_clean) {
+	if(!to_clean)
+		return;
+
+	if(to_clean->sprite_sheet)
+		free(to_clean->sprite_sheet);
+
+	free(to_clean);
+}
+
 void print_thinglist_data(struct thinglist_data* to_print) {
 	if(!to_print)
 		return;
