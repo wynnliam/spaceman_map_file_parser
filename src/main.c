@@ -6,13 +6,17 @@
 #include <string.h>
 
 int main() {
-	/*struct token_list* tokens = get_tokens("./bin/map.sqm");
+	struct token_list* tokens = get_tokens("./bin/c02.sqm");
 	struct recipe_list* map_tree = build_map_tree(tokens);
+	struct texture_list* texture_list = construct_texture_list();
 
-	print_recipe_list(map_tree, 0);
+	//print_recipe_list(map_tree, 0);
+
+	build_texture_list_from_map_tree(map_tree, texture_list);
+	print_texture_list(texture_list);
 
 	clean_token_list(tokens);
-	clean_recipe_list(map_tree);*/
+	clean_recipe_list(map_tree);
 
 	/*struct texlist_data* data1 = construct_texlist_data(NULL, "./floor_wood_1.bmp", 0);
 	struct texlist_data* data2 = construct_texlist_data(NULL, "./floor_wood_2.bmp", 1);
@@ -31,7 +35,7 @@ int main() {
 	clear_texture_list(list);
 	free(list);*/
 
-	struct attribute_list* list = construct_attribute_list();
+	/*struct attribute_list* list = construct_attribute_list();
 	insert_attribute_into_list(construct_attribute("n 1", "v 1"), list);
 	insert_attribute_into_list(construct_attribute("n 2", "v 2"), list);
 	insert_attribute_into_list(construct_attribute("n 3", "v 3"), list);
@@ -45,7 +49,7 @@ int main() {
 		free(val);
 	}
 
-	clean_attribute_list(list);
+	clean_attribute_list(list);*/
 
 	return 0;
 }

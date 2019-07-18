@@ -3,6 +3,8 @@
 #ifndef TEXTURE_LIST
 #define TEXTURE_LIST
 
+struct recipe_list;
+
 struct texlist_data {
 	// These two values identify a texlist_data.
 	// note that either of these (or both) can be NULL.
@@ -38,6 +40,8 @@ struct texlist_node* construct_texlist_node(struct texlist_data* data);
 
 struct texture_list* construct_texture_list();
 int insert_texture_into_texture_list(struct texture_list* list, struct texlist_data* data);
+int texture_list_contains(struct texture_list* list, struct texlist_data* to_find);
+int build_texture_list_from_map_tree(struct recipe_list* map_tree, struct texture_list* result);
 void clear_texture_list(struct texture_list* list);
 void print_texture_list(struct texture_list* list);
 

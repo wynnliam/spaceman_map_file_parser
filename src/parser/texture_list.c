@@ -1,6 +1,7 @@
 // Liam Wynn, 6/24/2019, Spaceman Engine Level Loading
 
 #include "./texture_list.h"
+#include "./recipe.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -130,4 +131,69 @@ void print_texture_list(struct texture_list* list) {
 		print_texlist_data(curr->data);
 		curr = curr->next;
 	}
+}
+
+int texture_list_contains(struct texture_list* list, struct texlist_data* to_find) {
+	if(!list || !to_find)
+		return 0;
+
+	int result = 0;
+	struct texlist_node* curr = list->head;
+
+	while(curr) {
+		if(texlist_data_equals(curr->data, to_find)) {
+			result = 1;
+			break;
+		}
+
+		curr = curr->next;
+	}
+
+	return result;
+}
+
+int build_texture_list_from_map_tree(struct recipe_list* map_tree, struct texture_list* result) {
+	if(!map_tree || !map_tree->head || !result)
+		return 0;
+
+	struct recipe* curr_recipe = map_tree->head->recipe;
+	struct recipe_list* sub_recipes = curr_recipe->subrecipes;
+
+	// If curr_recipe is a component recipe, then these values are 
+	char* attr_tex_0;
+	char* attr_tex_1;
+	char* attr_is_floor_ceil_pair;
+	struct texlist_data* texture_data;
+
+	if(strcmp(curr_recipe->type, "component") == 0) {
+		texture_data = (struct texlist_data*)malloc(sizeof(struct texlist_data));
+
+		attr_tex_0 = get_attribute_value(curr_recipe->attributes, "tex_0");
+		attr_tex_1 = get_attribute_value(curr_recipe->attributes, "tex_1");
+		attr_is_floor_ceil_pair = get_attribute_value(curr_recipe->attributes, "is_floor_ciel");
+
+		if(attr_tex_0)
+			texture_data->tex_0 = attr_tex_0;
+		else
+			texture_data->tex_0 = "0";
+
+		if(attr_tex_1)
+			texture_data->tex_1 = attr_tex_1;
+		else
+			texture_data->tex_1 = "0";
+
+		if(attr_is_floor_ceil_pair && strcmp(attr_is_floor_ceil_pair, "\"1\"") == 0)
+			texture_data->is_floor_ceil_pair = 1;
+		else
+			texture_data->is_floor_ceil_pair = 0;
+
+		if(!texture_list_contains(result, texture_data))
+			insert_texture_into_texture_list(result, texture_data);
+	}
+
+	struct recipe_list dummy;
+	dummy.head = map_tree->head->next;
+
+	return build_texture_list_from_map_tree(sub_recipes, result) +
+		   build_texture_list_from_map_tree(&dummy, result);
 }
