@@ -1,6 +1,7 @@
 // Liam Wynn, 7/18/2019, Spaceman Engine Level Loading
 
 #include "./thing_list.h"
+#include "./recipe.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -65,4 +66,16 @@ void print_thinglist_data(struct thinglist_data* to_print) {
 	printf("anim class: %d\n", to_print->anim_class);
 	printf("position: %d %d\n", to_print->x, to_print->y);
 	printf("rotation: %d\n", to_print->rot);
+}
+
+struct thing_data* thinglist_data_from_recipe(struct recipe* recipe) {
+	if(!recipe)
+		return NULL;
+
+	/*char* sprite_sheet_attr = get_attribute_value("sprite_sheet");
+	char* anim_class_attr = get_attribute_value("anim_class");
+	char* x_attr = get_attribute_value("x");
+	char* y_attr = get_attribute_value("y");
+	char* rot_attr = get_attribute_value("rot");*/
+	return NULL;
 }
