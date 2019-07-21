@@ -7,6 +7,7 @@
 #include <string.h>
 #include <stdio.h>
 
+/* THING LIST DATA IMPLEMENTATIONS */
 struct thinglist_data* construct_thinglist_data(const char* sprite_sheet, int anim_class, int x, int y, int rot) {
 	struct thinglist_data* result = (struct thinglist_data*)malloc(sizeof(struct thinglist_data));
 
@@ -108,4 +109,38 @@ struct thinglist_data* thinglist_data_from_recipe(struct recipe* recipe) {
 	if(rot_attr) free(rot_attr);
 
 	return result;
+}
+
+/* THING LIST IMPLEMENTATIONS */
+struct thing_list* construct_thing_list() {
+	struct thing_list* result = (struct thing_list*)malloc(sizeof(struct thing_list));
+
+	result->head = NULL;
+
+	return result;
+}
+
+int insert_data_into_thing_list(struct thing_list* list, struct thinglist_data* data) {
+	if(!list || !data)
+		return 0;
+
+	struct thinglist_node* temp = (struct thinglist_node*)malloc(sizeof(struct thinglist_node*));
+
+	temp->data = data;
+	temp->next = list->head;
+	list->head = temp;
+
+	return 1;
+}
+
+void print_thing_list(struct thing_list* list) {
+	if(!list)
+		return;
+
+	struct thinglist_node* curr = list->head;
+
+	while(curr) {
+		print_thinglist_data(curr->data);
+		curr = curr->next;
+	}
 }

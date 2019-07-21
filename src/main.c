@@ -28,7 +28,7 @@ int main() {
 	else
 		printf("False!\n");*/
 
-	struct recipe* recipe = construct_recipe(0, "thing");
+	/*struct recipe* recipe = construct_recipe(0, "thing");
 	struct thinglist_data* thinglist_data;
 
 	insert_attribute_into_recipe(construct_attribute("sprite_sheet", "./sprite_sheet.bmp"), recipe);
@@ -42,7 +42,16 @@ int main() {
 	print_thinglist_data(thinglist_data);
 
 	clean_recipe(recipe);
-	clean_thinglist_data(thinglist_data);
+	clean_thinglist_data(thinglist_data);*/
+
+	struct thing_list* list = construct_thing_list();
+
+	insert_data_into_thing_list(list, construct_thinglist_data("./shee1.bmp", 0, 1024, 2048, -93));
+	insert_data_into_thing_list(list, construct_thinglist_data("./shee2.bmp", 2, 1024, 2048, 0));
+	insert_data_into_thing_list(list, construct_thinglist_data("./shee3.bmp", 1, 1024, 2048, 43));
+	insert_data_into_thing_list(list, construct_thinglist_data("./shee4.bmp", 0, 1024, 2048, 22));
+
+	print_thing_list(list);
 
 	return 0;
 }

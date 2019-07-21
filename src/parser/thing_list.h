@@ -13,11 +13,10 @@ struct thinglist_data {
 	int rot;
 };
 
-struct thinglist_node* {
+struct thinglist_node {
 	struct thinglist_data* data;
 	struct thinglist_node* next;
 };
-
 
 struct thing_list {
 	struct thinglist_node* head;
@@ -29,5 +28,9 @@ void clean_thinglist_data(struct thinglist_data* to_clean);
 void print_thinglist_data(struct thinglist_data* to_print);
 
 struct thinglist_data* thinglist_data_from_recipe(struct recipe* recipe);
+
+struct thing_list* construct_thing_list();
+int insert_data_into_thing_list(struct thing_list* list, struct thinglist_data* data);
+void print_thing_list(struct thing_list* list);
 #endif
 
