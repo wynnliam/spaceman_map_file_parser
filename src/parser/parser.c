@@ -1,6 +1,7 @@
 // Liam Wynn, 6/7/2019, Spaceman Engine Level Loading
 
 #include "./parser.h"
+#include "./utilities.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -74,7 +75,10 @@ struct recipe* build_recipe_from_tokens(struct token_list_node** curr) {
 			*curr = (*curr)->next;
 			break;
 		} else if(is_attribute(*curr)) {
-			attribute = construct_attribute((*curr)->token->symbol, (*curr)->next->next->token->symbol);
+			char* value_no_quotes = remove_comment_from_string((*curr)->next->next->token->symbol);
+			attribute = construct_attribute((*curr)->token->symbol, value_no_quotes);
+			free(value_no_quotes);
+
 			insert_attribute_into_recipe(attribute, result);
 			*curr = (*curr)->next->next->next->next;
 		} else if(is_recipe(*curr)) {

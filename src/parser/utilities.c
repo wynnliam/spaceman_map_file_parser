@@ -5,27 +5,27 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include <stdio.h>
+
 char* remove_comment_from_string(char* str) {
 	if(!str)
 		return NULL;
 
-	int len = strlen(str);
-	char* result;
+	char* result = NULL;
+	int str_len = strlen(str);
 
-	// The length of the character must support two " characters,
-	// And the first and last characters must be ".
-	if(len >= 2 && str[0] == '"' && str[len - 1] == '"') {
-		// Length of the resulting string is two less than the given string
-		// plus 1, since we need a \0. So the length is len - 2 + 1 = len - 1.
-		result = (char*)malloc(len - 1);
+	char* str_without_first_quote;
+	int result_len;
+	int i;
 
-		int i;
-		for(i = 1; i < len - 1; i++)
-			result[i - 1] = str[i];
+	if(str_len > 2 && str[0] == '"' && str[str_len - 1] == '"') {
+		str_without_first_quote = &str[1];
+		result_len = strlen(str_without_first_quote) - 1;
 
-		result[i] = '\0';
-	} else
-		result = NULL;
+		result = (char*)malloc(sizeof(char) * (result_len + 1));
+		strncpy(result, str_without_first_quote, result_len);
+		result[result_len] = '\0';
+	}
 
 	return result;
 }

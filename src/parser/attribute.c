@@ -1,6 +1,7 @@
 // Liam Wynn, 6/7/2019, Spaceman Engine Level Loading
 
 #include "./attribute.h"
+#include "./utilities.h"
 
 #include <stdlib.h>
 #include <string.h>
