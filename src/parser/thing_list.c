@@ -133,6 +133,28 @@ int insert_data_into_thing_list(struct thing_list* list, struct thinglist_data* 
 	return 1;
 }
 
+void clean_thing_list(struct thing_list* to_clean) {
+	if(!to_clean)
+		return;
+
+	struct thinglist_node* curr;
+	struct thinglist_node* next;
+
+	curr = to_clean->head;
+	next = NULL;
+
+	while(curr) {
+		next = curr->next;
+
+		clean_thinglist_data(curr->data);
+		free(curr);
+
+		curr = next;
+	}
+
+	free(to_clean);
+}
+
 void print_thing_list(struct thing_list* list) {
 	if(!list)
 		return;

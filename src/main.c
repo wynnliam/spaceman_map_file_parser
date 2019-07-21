@@ -52,6 +52,7 @@ int main() {
 	insert_data_into_thing_list(list, construct_thinglist_data("./shee4.bmp", 0, 1024, 2048, 22));
 
 	print_thing_list(list);
+	clean_thing_list(list);
 
 	return 0;
 }
