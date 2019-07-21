@@ -31,6 +31,7 @@ struct thinglist_data* thinglist_data_from_recipe(struct recipe* recipe);
 
 struct thing_list* construct_thing_list();
 int insert_data_into_thing_list(struct thing_list* list, struct thinglist_data* data);
+int thing_list_contains(struct thing_list* list, struct thinglist_data* to_find);
 void clean_thing_list(struct thing_list* to_clean);
 void print_thing_list(struct thing_list* list);
 #endif

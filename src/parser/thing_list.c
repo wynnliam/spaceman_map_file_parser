@@ -133,6 +133,24 @@ int insert_data_into_thing_list(struct thing_list* list, struct thinglist_data* 
 	return 1;
 }
 
+int thing_list_contains(struct thing_list* list, struct thinglist_data* to_find) {
+	if(!list)
+		return 0;
+
+	int result = 0;
+	struct thinglist_node* curr = list->head;
+
+	while(curr) {
+		if(thinglist_data_equals(curr->data, to_find)) {
+			result = 1;
+			break;
+		} else
+			curr = curr->next;
+	}
+
+	return result;
+}
+
 void clean_thing_list(struct thing_list* to_clean) {
 	if(!to_clean)
 		return;

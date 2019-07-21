@@ -45,11 +45,23 @@ int main() {
 	clean_thinglist_data(thinglist_data);*/
 
 	struct thing_list* list = construct_thing_list();
+	struct thinglist_data data;
 
 	insert_data_into_thing_list(list, construct_thinglist_data("./shee1.bmp", 0, 1024, 2048, -93));
 	insert_data_into_thing_list(list, construct_thinglist_data("./shee2.bmp", 2, 1024, 2048, 0));
 	insert_data_into_thing_list(list, construct_thinglist_data("./shee3.bmp", 1, 1024, 2048, 43));
 	insert_data_into_thing_list(list, construct_thinglist_data("./shee4.bmp", 0, 1024, 2048, 22));
+
+	data.sprite_sheet = "./shee1.bmp";
+	data.anim_class = 0;
+	data.x = 1023;
+	data.y = 2048;
+	data.rot = -93;
+
+	if(thing_list_contains(list, &data))
+		printf("Yes!\n");
+	else
+		printf("No!\n");
 
 	print_thing_list(list);
 	clean_thing_list(list);
