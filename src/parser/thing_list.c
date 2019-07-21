@@ -24,6 +24,27 @@ struct thinglist_data* construct_thinglist_data(const char* sprite_sheet, int an
 	return result;
 }
 
+int thinglist_data_equals(struct thinglist_data* a, struct thinglist_data* b) {
+	int result;
+	int sprite_sheet_cmp;
+
+	if(!a || !b) {
+		result = a == b;
+	} else {
+		if(a->sprite_sheet && b->sprite_sheet)
+			sprite_sheet_cmp = strcmp(a->sprite_sheet, b->sprite_sheet) == 0;
+		else
+			sprite_sheet_cmp = a->sprite_sheet == b->sprite_sheet;
+
+		result = sprite_sheet_cmp &&
+				 a->x == b->x && a->y == b->y &&
+				 a->rot == b->rot &&
+				 a->anim_class == b->anim_class;
+	}
+
+	return result;
+}
+
 void clean_thinglist_data(struct thinglist_data* to_clean) {
 	if(!to_clean)
 		return;

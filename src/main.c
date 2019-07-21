@@ -20,13 +20,13 @@ int main() {
 	clear_texture_list(texture_list);
 	free(texture_list);*/
 
-	struct thinglist_data* thing_data = construct_thinglist_data("./src/assests/sprites/sculptures/king_rock.bmp",
-																 0,
-																 1120, 640,
-																 90);
+	struct thinglist_data* thing_data = construct_thinglist_data(NULL, 0, 1120, 640, 90);
+	struct thinglist_data* thing_data_2 = construct_thinglist_data("www", 0, 1120, 640, 90);
 
-	print_thinglist_data(thing_data);
-	clean_thinglist_data(thing_data);
+	if(thinglist_data_equals(thing_data, thing_data_2))
+		printf("True!\n");
+	else
+		printf("False!\n");
 
 	return 0;
 }
