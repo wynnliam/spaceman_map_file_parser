@@ -13,6 +13,16 @@ struct thinglist_data {
 	int rot;
 };
 
+struct thinglist_node* {
+	struct thinglist_data* data;
+	struct thinglist_node* next;
+};
+
+
+struct thing_list {
+	struct thinglist_node* head;
+};
+
 struct thinglist_data* construct_thinglist_data(const char* sprite_sheet, int anim_class, int x, int y, int rot);
 int thinglist_data_equals(struct thinglist_data* a, struct thinglist_data* b);
 void clean_thinglist_data(struct thinglist_data* to_clean);
