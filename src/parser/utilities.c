@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 
-char* remove_comment_from_string(char* str) {
+char* remove_quotations_from_string(char* str) {
 	if(!str)
 		return NULL;
 

@@ -75,7 +75,7 @@ struct recipe* build_recipe_from_tokens(struct token_list_node** curr) {
 			*curr = (*curr)->next;
 			break;
 		} else if(is_attribute(*curr)) {
-			char* value_no_quotes = remove_comment_from_string((*curr)->next->next->token->symbol);
+			char* value_no_quotes = remove_quotations_from_string((*curr)->next->next->token->symbol);
 			attribute = construct_attribute((*curr)->token->symbol, value_no_quotes);
 			free(value_no_quotes);
 
