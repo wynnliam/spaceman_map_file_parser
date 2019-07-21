@@ -184,3 +184,34 @@ void print_thing_list(struct thing_list* list) {
 		curr = curr->next;
 	}
 }
+
+static int build_thing_list_from_recipe_list_node(struct recipe_list_node* node, struct thing_list* result) {
+	if(!node || !node->recipe || !result)
+		return 0;
+
+	struct recipe* recipe = node->recipe;
+	struct recipe_list_node* next_recipe = node->next;
+	struct recipe_list_node* subrecipe_node = recipe->subrecipes->head;
+
+	if(strcmp(recipe->type, "thing") == 0) {
+		struct thinglist_data* data = thinglist_data_from_recipe(recipe);
+
+		if(!thing_list_contains(result, data))
+			insert_data_into_thing_list(result, data);
+		else
+			clean_thinglist_data(data);
+	}
+
+	return 1 + build_thing_list_from_recipe_list_node(subrecipe_node, result) +
+			   build_thing_list_from_recipe_list_node(next_recipe, result);
+}
+
+struct thing_list* build_thing_list_from_map_tree(struct recipe_list* map_tree) {
+	if(!map_tree)
+		return NULL;
+
+	struct thing_list* result = construct_thing_list();
+	build_thing_list_from_recipe_list_node(map_tree->head, result);
+
+	return result;
+}

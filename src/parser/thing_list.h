@@ -4,6 +4,7 @@
 #define THING_LIST
 
 struct recipe;
+struct recipe_list;
 
 struct thinglist_data {
 	char* sprite_sheet;
@@ -34,5 +35,7 @@ int insert_data_into_thing_list(struct thing_list* list, struct thinglist_data* 
 int thing_list_contains(struct thing_list* list, struct thinglist_data* to_find);
 void clean_thing_list(struct thing_list* to_clean);
 void print_thing_list(struct thing_list* list);
+
+struct thing_list* build_thing_list_from_map_tree(struct recipe_list* map_tree);
 #endif
 
