@@ -18,6 +18,6 @@ int thinglist_data_equals(struct thinglist_data* a, struct thinglist_data* b);
 void clean_thinglist_data(struct thinglist_data* to_clean);
 void print_thinglist_data(struct thinglist_data* to_print);
 
-struct thing_data* thinglist_data_from_recipe(struct recipe* recipe);
+struct thinglist_data* thinglist_data_from_recipe(struct recipe* recipe);
 #endif
 

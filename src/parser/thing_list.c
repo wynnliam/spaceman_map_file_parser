@@ -68,14 +68,44 @@ void print_thinglist_data(struct thinglist_data* to_print) {
 	printf("rotation: %d\n", to_print->rot);
 }
 
-struct thing_data* thinglist_data_from_recipe(struct recipe* recipe) {
-	if(!recipe)
+struct thinglist_data* thinglist_data_from_recipe(struct recipe* recipe) {
+	if(!recipe || !recipe->attributes)
 		return NULL;
 
-	/*char* sprite_sheet_attr = get_attribute_value("sprite_sheet");
-	char* anim_class_attr = get_attribute_value("anim_class");
-	char* x_attr = get_attribute_value("x");
-	char* y_attr = get_attribute_value("y");
-	char* rot_attr = get_attribute_value("rot");*/
-	return NULL;
+	// The raw attribute values
+	char* sprite_sheet_attr = get_attribute_value(recipe->attributes, "sprite_sheet");
+	char* anim_class_attr = get_attribute_value(recipe->attributes, "anim_class");
+	char* x_attr = get_attribute_value(recipe->attributes, "x");
+	char* y_attr = get_attribute_value(recipe->attributes, "y");
+	char* rot_attr = get_attribute_value(recipe->attributes, "rot");
+
+	// The thinglist data values
+	char* result_sprite_sheet = NULL;
+	int result_anim_class = 0;
+	int result_x = 0;
+	int result_y = 0;
+	int result_rot = 0;
+	struct thinglist_data* result;
+
+	// If the sprite_sheet_attr exists and does not equal "0" (denotes None in level file)
+	if(sprite_sheet_attr && strcmp(sprite_sheet_attr, "0") != 0)
+		result_sprite_sheet = sprite_sheet_attr;
+	if(anim_class_attr)
+		result_anim_class = atoi(anim_class_attr);
+	if(x_attr)
+		result_x = atoi(x_attr);
+	if(y_attr)
+		result_y = atoi(y_attr);
+	if(rot_attr)
+		result_rot = atoi(rot_attr);
+	
+	result = construct_thinglist_data(result_sprite_sheet, result_anim_class, result_x, result_y, result_rot);
+
+	if(sprite_sheet_attr) free(sprite_sheet_attr);
+	if(anim_class_attr) free(anim_class_attr);
+	if(x_attr) free(x_attr);
+	if(y_attr) free(y_attr);
+	if(rot_attr) free(rot_attr);
+
+	return result;
 }
