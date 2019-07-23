@@ -20,6 +20,15 @@ struct texlist_data {
 	// if a floor/ceil pair, then tex_0 is the floor texture, and tex_1 is
 	// the ceil. In a wall, tex_1 has no meaning, and tex_0 is the wall texture.
 	int is_floor_ceil_pair;
+
+	// Used in the mapdef to identify the tile texture in the mapdef.
+	// The rule is that floor/ceiling textures are a number from 0 to 99 (inclusive)
+	// and the wall textures are from 100 to 199. This nomenclature is an artifact
+	// from early mapdef development, and is the way we differentiate walls from floor/ceils
+	// while using the layout int array.
+
+	// This value is set when we insert into a texture_list.
+	unsigned int mapdef_id;
 };
 
 struct texlist_node {
@@ -29,6 +38,14 @@ struct texlist_node {
 
 struct texture_list {
 	struct texlist_node* head;
+
+	// Used to identify walls and floor/ceil textures.
+	// For example, when we insert a new wall texture,
+	// its id becomes num_walls + 100 (and then num_walls is incremented).
+	// For floor/ceil textures the id is just the current value of num_floor_ceils
+	// (which too is also incremented after inserting a floor/ceil texture).
+	unsigned int num_walls;
+	unsigned int num_floor_ceils;
 };
 
 struct texlist_data* construct_texlist_data(const char* tex_0, const char* tex_1, int is_floor_ceil_pair);
