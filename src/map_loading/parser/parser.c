@@ -1,7 +1,7 @@
 // Liam Wynn, 6/7/2019, Spaceman Engine Level Loading
 
 #include "./parser.h"
-#include "./utilities.h"
+#include "../utilities/utilities.h"
 
 #include <stdlib.h>
 #include <stdio.h>

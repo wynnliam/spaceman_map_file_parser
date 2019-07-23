@@ -1,7 +1,7 @@
 // Liam Wynn, 7/18/2019, Spaceman Engine Level Loading
 
 #include "./thing_list.h"
-#include "./recipe.h"
+#include "../parser/recipe.h"
 
 #include <stdlib.h>
 #include <string.h>

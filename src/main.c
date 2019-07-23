@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./parser/parser.h"
-#include "./parser/texture_list.h"
-#include "./parser/thing_list.h"
+#include "./map_loading/tokenizer/tokenizer.h"
+#include "./map_loading/parser/parser.h"
+#include "./map_loading/ir/texture_list.h"
+#include "./map_loading/ir/thing_list.h"
 
 int main() {
 	// TODO: Standardize texture list
