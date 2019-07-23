@@ -77,7 +77,7 @@ void print_texlist_data(struct texlist_data* data) {
 	printf("mapdef_id: %d\n", data->mapdef_id);
 	printf("tex_0: %s\n", data->tex_0 ? data->tex_0 : "0");
 	printf("tex_1: %s\n", data->tex_1 ? data->tex_1 : "0");
-	printf("Is floor/ceiling pair: %s\n", data->is_floor_ceil_pair ? "True" : "False");
+	printf("Is floor/ceiling pair: %s\n\n", data->is_floor_ceil_pair ? "True" : "False");
 }
 
 struct texlist_node* construct_texlist_node(struct texlist_data* data) {
@@ -208,7 +208,7 @@ static struct texlist_data* build_texlist_data_from_recipe(struct recipe* compon
 	char* attr_is_floor_ceil_pair = get_attribute_value(component_recipe->attributes, "is_floor_ciel");
 	int is_floor_ciel;
 
-	if(attr_is_floor_ceil_pair && strcmp(attr_is_floor_ceil_pair, "\"1\"") == 0) {
+	if(attr_is_floor_ceil_pair && strcmp(attr_is_floor_ceil_pair, "1") == 0) {
 		is_floor_ciel = 1;
 	} else
 		is_floor_ciel = 0;
