@@ -13,5 +13,9 @@ struct component {
 
 	unsigned int x, y, w, h;
 };
+
+struct component* construct_component(unsigned int tex_id, unsigned int x, unsigned int y,
+									  unsigned int w, unsigned int h);
+void print_component(struct component* to_print);
 #endif
 
