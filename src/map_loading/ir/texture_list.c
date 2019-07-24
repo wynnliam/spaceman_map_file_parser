@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-static struct texlist_data* build_texlist_data_from_recipe(struct recipe* component_recipe);
 static int build_texture_list_from_recipe_list_node(struct recipe_list_node* head, struct texture_list* result);
 
 struct texlist_data* construct_texlist_data(const char* tex_0, const char* tex_1, int is_floor_ceil_pair) {
@@ -220,7 +219,7 @@ static int build_texture_list_from_recipe_list_node(struct recipe_list_node* hea
 		   build_texture_list_from_recipe_list_node(head->next, result);
 }
 
-static struct texlist_data* build_texlist_data_from_recipe(struct recipe* component_recipe) {
+struct texlist_data* build_texlist_data_from_recipe(struct recipe* component_recipe) {
 	if(!component_recipe)
 		return NULL;
 
