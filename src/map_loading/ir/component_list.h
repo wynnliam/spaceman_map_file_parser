@@ -16,6 +16,7 @@ struct component {
 
 struct component* construct_component(unsigned int tex_id, unsigned int x, unsigned int y,
 									  unsigned int w, unsigned int h);
+void clean_component(struct component* to_clean);
 void print_component(struct component* to_print);
 #endif
 

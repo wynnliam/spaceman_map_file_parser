@@ -18,6 +18,13 @@ struct component* construct_component(unsigned int tex_id, unsigned int x, unsig
 	return result;
 }
 
+void clean_component(struct component* to_clean) {
+	if(!to_clean)
+		return;
+
+	free(to_clean);
+}
+
 void print_component(struct component* to_print) {
 	if(!to_print)
 		return;
