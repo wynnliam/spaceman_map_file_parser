@@ -15,6 +15,15 @@ struct component {
 	unsigned int x, y, w, h;
 };
 
+struct component_list_node {
+	struct component* data;
+	struct component_list_node* next;
+};
+
+struct component_list {
+	struct component_list_node* head;
+};
+
 struct component* construct_component(unsigned int tex_id, unsigned int x, unsigned int y,
 									  unsigned int w, unsigned int h);
 struct component* construct_component_from_recipe_and_texture_list(struct recipe* recipe, struct texture_list* texture_list);
