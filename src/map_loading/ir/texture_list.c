@@ -171,6 +171,25 @@ int texture_list_contains(struct texture_list* list, struct texlist_data* to_fin
 	return result;
 }
 
+unsigned int find_mapdef_id(struct texlist_data* find_id_for, struct texture_list* list) {
+	if(!find_id_for || !list)
+		return 0;
+
+	unsigned int result = 0;
+	struct texlist_node* curr = list->head;
+	
+	while(curr) {
+		if(texlist_data_equals(curr->data, find_id_for)) {
+			result = curr->data->mapdef_id;
+			break;
+		}
+
+		curr = curr->next;
+	}
+
+	return result;
+}
+
 int build_texture_list_from_map_tree(struct recipe_list* map_tree, struct texture_list* result) {
 	if(!map_tree || !map_tree->head || !result)
 		return 0;

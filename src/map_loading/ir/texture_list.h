@@ -58,6 +58,7 @@ struct texlist_node* construct_texlist_node(struct texlist_data* data);
 struct texture_list* construct_texture_list();
 int insert_texture_into_texture_list(struct texture_list* list, struct texlist_data* data);
 int texture_list_contains(struct texture_list* list, struct texlist_data* to_find);
+unsigned int find_mapdef_id(struct texlist_data* find_id_for, struct texture_list* list);
 int build_texture_list_from_map_tree(struct recipe_list* map_tree, struct texture_list* result);
 void clear_texture_list(struct texture_list* list);
 void print_texture_list(struct texture_list* list);
