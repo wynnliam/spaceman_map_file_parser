@@ -3,7 +3,8 @@
 #ifndef COMPONENT_LIST
 #define COMPONENT_LIST
 
-struct recipe_list;
+struct recipe;
+struct texture_list;
 
 // A rectangular group of tiles
 struct component {
@@ -16,6 +17,7 @@ struct component {
 
 struct component* construct_component(unsigned int tex_id, unsigned int x, unsigned int y,
 									  unsigned int w, unsigned int h);
+struct component* construct_component_from_recipe_and_texture_list(struct recipe* recipe, struct texture_list* texture_list);
 void clean_component(struct component* to_clean);
 void print_component(struct component* to_print);
 #endif

@@ -18,6 +18,18 @@ struct component* construct_component(unsigned int tex_id, unsigned int x, unsig
 	return result;
 }
 
+struct component* construct_component_from_recipe_and_texture_list(struct recipe* recipe, struct texture_list* texture_list) {
+	/*if(!recipe || !texture_list)
+		return NULL;
+	
+	struct component* result = (struct component*)malloc(sizeof(struct component));
+
+	// ...
+
+	return result;*/
+	return NULL;
+}
+
 void clean_component(struct component* to_clean) {
 	if(!to_clean)
 		return;
