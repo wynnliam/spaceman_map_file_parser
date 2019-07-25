@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/* COMPONENT IMPLEMENTATIONS */
 struct component* construct_component(unsigned int tex_id, unsigned int x, unsigned int y,
 									  unsigned int w, unsigned int h) {
 	struct component* result = (struct component*)malloc(sizeof(struct component));
@@ -78,4 +79,57 @@ void print_component(struct component* to_print) {
 	printf("Texture ID: %u\n", to_print->tex_id);
 	printf("Dimensions: { x: %u, y: %u, w: %u, h: %u }\n\n",
 			to_print->x, to_print->y, to_print->w, to_print->h);
+}
+
+/* COMPONENT LIST IMPLEMENTATIONS */
+struct component_list* construct_component_list() {
+	struct component_list* result = (struct component_list*)malloc(sizeof(struct component_list));
+
+	result->head = NULL;
+
+	return result;
+}
+
+void insert_component_into_list(struct component_list* list, struct component* component) {
+	if(!list || !component)
+		return;
+
+	struct component_list_node* temp = (struct component_list_node*)malloc(sizeof(struct component_list_node));
+	temp->data = component;
+	temp->next = list->head;
+	list->head = temp;
+}
+
+void clean_component_list(struct component_list* list) {
+	if(!list)
+		return;
+
+	struct component_list_node* curr;
+	struct component_list_node* temp;
+
+	curr = list->head;
+	temp = NULL;
+
+	while(curr) {
+		temp = curr->next;
+
+		clean_component(curr->data);
+		free(curr);
+
+		curr = temp;
+	}
+
+	free(list);
+}
+
+void print_component_list(struct component_list* list) {
+	if(!list)
+		return;
+
+	struct component_list_node* curr = list->head;
+
+	while(curr) {
+		print_component(curr->data);
+		curr = curr->next;
+	}
 }
