@@ -3,6 +3,7 @@
 #include "intermediate_mapdef.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
 struct intermediate_mapdef* construct_intermediate_mapdef(struct recipe_list* map_tree) {
 	if(!map_tree)
@@ -36,4 +37,15 @@ void clean_intermediate_mapdef(struct intermediate_mapdef* to_clean) {
 	}
 
 	free(to_clean);
+}
+
+void print_intermediate_mapdef(struct intermediate_mapdef* to_print) {
+	if(!to_print)
+		return;
+
+	print_texture_list(to_print->textures);
+	printf("\n");
+	print_thing_list(to_print->things);
+	printf("\n");
+	print_component_list(to_print->components);
 }

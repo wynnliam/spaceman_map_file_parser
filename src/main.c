@@ -15,12 +15,8 @@ int main() {
 	print_token_list(tokens);
 	printf("\n");
 	print_recipe_list(map_tree, 0);
-	/*printf("\n");
-	print_texture_list(texture_list);
 	printf("\n");
-	print_thing_list(thing_list);
-	printf("\n");
-	print_component_list(components);*/
+	print_intermediate_mapdef(intermediate_mapdef);
 
 	clean_token_list(tokens);
 	clean_recipe_list(map_tree);
