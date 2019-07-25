@@ -4,6 +4,7 @@
 #define COMPONENT_LIST
 
 struct recipe;
+struct recipe_list;
 struct texture_list;
 
 // A rectangular group of tiles
@@ -31,6 +32,8 @@ void clean_component(struct component* to_clean);
 void print_component(struct component* to_print);
 
 struct component_list* construct_component_list();
+struct component_list* build_component_list_from_recipe_list_and_texture_list(
+						struct recipe_list* map_tree, struct texture_list* texture_list);
 void insert_component_into_list(struct component_list* list, struct component* component);
 void clean_component_list(struct component_list* list);
 void print_component_list(struct component_list* list);

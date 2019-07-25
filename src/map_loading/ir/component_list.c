@@ -6,6 +6,9 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+
+static int build_component_list_from_recipe_list_nodes_and_texture_list(struct recipe_list_node* head, struct texture_list* texlist, struct component_list* result);
 
 /* COMPONENT IMPLEMENTATIONS */
 struct component* construct_component(unsigned int tex_id, unsigned int x, unsigned int y,
@@ -88,6 +91,33 @@ struct component_list* construct_component_list() {
 	result->head = NULL;
 
 	return result;
+}
+
+struct component_list* build_component_list_from_recipe_list_and_texture_list(
+						struct recipe_list* map_tree, struct texture_list* texture_list) {
+	if(!map_tree || !texture_list)
+		return NULL;
+
+	struct component_list* result = construct_component_list();
+
+	build_component_list_from_recipe_list_nodes_and_texture_list(map_tree->head, texture_list, result);
+
+	return result;
+}
+
+static int build_component_list_from_recipe_list_nodes_and_texture_list(struct recipe_list_node* head,
+																		struct texture_list* texlist,
+																		struct component_list* result) {
+	if(!head || !texlist || !result)
+		return 0;
+
+	if(head->recipe && strcmp(head->recipe->type, "component") == 0) {
+		struct component* component = construct_component_from_recipe_and_texture_list(head->recipe, texlist);
+		insert_component_into_list(result, component);
+	}
+
+	return 1 + build_component_list_from_recipe_list_nodes_and_texture_list(head->recipe->subrecipes->head, texlist, result) +
+			   build_component_list_from_recipe_list_nodes_and_texture_list(head->next, texlist, result);
 }
 
 void insert_component_into_list(struct component_list* list, struct component* component) {
