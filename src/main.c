@@ -24,11 +24,7 @@ int main() {
 
 	clean_token_list(tokens);
 	clean_recipe_list(map_tree);
+	clean_intermediate_mapdef(intermediate_mapdef);
 
-	/*clean_thing_list(thing_list);
-	clean_component_list(components);
-
-	clear_texture_list(texture_list);
-	free(texture_list);*/
 	return 0;
 }

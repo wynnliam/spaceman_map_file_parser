@@ -22,5 +22,6 @@ struct intermediate_mapdef {
 };
 
 struct intermediate_mapdef* construct_intermediate_mapdef(struct recipe_list* map_tree);
+void clean_intermediate_mapdef(struct intermediate_mapdef* to_clean);
 
 #endif

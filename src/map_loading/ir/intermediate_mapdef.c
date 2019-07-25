@@ -20,3 +20,20 @@ struct intermediate_mapdef* construct_intermediate_mapdef(struct recipe_list* ma
 	return result;
 }
 
+void clean_intermediate_mapdef(struct intermediate_mapdef* to_clean) {
+	if(!to_clean)
+		return;
+
+	if(to_clean->things)
+		clean_thing_list(to_clean->things);
+
+	if(to_clean->components)
+		clean_component_list(to_clean->components);
+
+	if(to_clean->textures) {
+		clear_texture_list(to_clean->textures);
+		free(to_clean->textures);
+	}
+
+	free(to_clean);
+}
